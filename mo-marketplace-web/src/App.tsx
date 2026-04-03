@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from "./store/AuthContext";
 import LoginPage from "./pages/LoginPage";
 import "./App.css";
 import ProductListPage from "./pages/ProductListPage";
+import ProductCreatePage from "./pages/ProductCreatePage";
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -42,6 +43,14 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <ProductListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/create"
+            element={
+              <ProtectedRoute>
+                <ProductCreatePage />
               </ProtectedRoute>
             }
           />
