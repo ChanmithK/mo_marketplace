@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Variant } from './variant.entity';
 
 @Entity('products')
 export class Product {
@@ -25,4 +27,10 @@ export class Product {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  @OneToMany(() => Variant, (variant) => variant.product, {
+    cascade: true,
+    eager: false,
+  })
+  variants: Variant[];
 }

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { VariantResponseDto } from '../../variants/dto/variant-response.dto';
 
 export class ProductResponseDto {
   @ApiProperty()
@@ -18,4 +19,7 @@ export class ProductResponseDto {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiProperty({ type: [VariantResponseDto], required: false })
+  variants?: VariantResponseDto[];
 }
