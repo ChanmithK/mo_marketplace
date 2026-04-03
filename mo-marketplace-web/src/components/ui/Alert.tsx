@@ -1,0 +1,44 @@
+import React from "react";
+
+interface AlertProps {
+  type: "success" | "error" | "warning" | "info";
+  message: string;
+  onClose?: () => void;
+}
+
+export const Alert: React.FC<AlertProps> = ({ type, message, onClose }) => {
+  const typeStyles = {
+    success: "bg-green-100 border-green-400 text-green-700",
+    error: "bg-red-100 border-red-400 text-red-700",
+    warning: "bg-yellow-100 border-yellow-400 text-yellow-700",
+    info: "bg-blue-100 border-blue-400 text-blue-700",
+  };
+
+  return (
+    <div className={`border-l-4 p-4 ${typeStyles[type]} rounded`} role="alert">
+      <div className="flex justify-between items-center">
+        <p>{message}</p>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="ml-4 text-current hover:text-gray-700 focus:outline-none"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
