@@ -1,98 +1,335 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# MO Marketplace API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS backend API for MO Marketplace technical assessment.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **JWT Authentication** - Secure token-based authentication
+- **Product Management** - Full CRUD operations for products
+- **Variant Management** - Product variants with automatic combination_key generation
+- **Duplicate Prevention** - Unique constraint on variant combinations
+- **Swagger Documentation** - Interactive API documentation
+- **DTO Validation** - Comprehensive input validation using class-validator
+- **PostgreSQL Database** - Robust data persistence with TypeORM
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- **Framework**: NestJS
+- **Database**: PostgreSQL
+- **ORM**: TypeORM
+- **Authentication**: JWT (Passport)
+- **Validation**: class-validator
+- **Documentation**: Swagger/OpenAPI
 
-```bash
-$ npm install
-```
+## Prerequisites
 
-## Compile and run the project
+- Node.js v20+
+- npm v9+ or pnpm v8+
+- PostgreSQL 15+
+
+## Installation
+
+1. **Install dependencies:**
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+2. **Setup environment variables:**
+   Create a `.env` file in the root directory:
+
+```env
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=mo_marketplace
+NODE_ENV=development
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRATION=1d
+PORT=3000
+```
+
+3. **Setup PostgreSQL database:**
 
 ```bash
-# unit tests
-$ npm run test
+# Create database
+createdb mo_marketplace
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Or using Docker
+docker run --name mo-marketplace-db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=mo_marketplace \
+  -p 5432:5432 \
+  -d postgres:15
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Running the Application
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
+
+# Debug mode
+npm run start:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The application will start on `http://localhost:3000`
 
-## Resources
+## API Documentation
 
-Check out a few resources that may come in handy when working with NestJS:
+Swagger UI is available at: `http://localhost:3000/api`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Authentication Endpoints
 
-## Support
+#### POST /auth/login
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Login user and get JWT token
 
-## Stay in touch
+```json
+{
+  "email": "admin@mo-marketplace.com",
+  "password": "password123"
+}
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Response:
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "1",
+    "email": "admin@mo-marketplace.com",
+    "name": "Admin User"
+  }
+}
+```
+
+#### GET /auth/profile
+
+Get current user profile (Requires JWT)
+
+### Product Endpoints
+
+#### POST /products
+
+Create a new product (Requires JWT)
+
+```json
+{
+  "name": "T-Shirt Premium",
+  "description": "High quality cotton t-shirt",
+  "basePrice": 29.99
+}
+```
+
+#### GET /products
+
+Get all products (public)
+
+#### GET /products/:id
+
+Get a single product by ID (public)
+
+#### PATCH /products/:id
+
+Update a product (Requires JWT)
+
+#### DELETE /products/:id
+
+Delete a product (Requires JWT)
+
+#### POST /products/quick-buy
+
+Quick buy endpoint
+
+```json
+{
+  "productId": "uuid",
+  "variantId": "uuid",
+  "quantity": 1
+}
+```
+
+Response:
+
+```json
+{
+  "success": true
+}
+```
+
+### Variant Endpoints
+
+#### POST /products/:productId/variants
+
+Create a variant for a product (Requires JWT)
+
+```json
+{
+  "color": "Red",
+  "size": "M",
+  "material": "Cotton",
+  "stock": 100,
+  "price": 34.99
+}
+```
+
+Generates combination_key automatically: `red-m-cotton`
+
+#### GET /products/:productId/variants
+
+Get all variants for a product
+
+#### GET /variants/:id
+
+Get a single variant by ID
+
+#### PATCH /variants/:id
+
+Update a variant (Requires JWT)
+
+#### DELETE /variants/:id
+
+Delete a variant (Requires JWT)
+
+## Database Schema
+
+### Product Entity
+
+```typescript
+{
+  id: string (UUID)
+  name: string
+  description?: string
+  basePrice: decimal
+  createdAt: timestamp
+  updatedAt: timestamp
+  variants: Variant[]
+}
+```
+
+### Variant Entity
+
+```typescript
+{
+  id: string (UUID)
+  productId: string (UUID)
+  color: string
+  size: string
+  material: string
+  stock: number
+  price?: decimal
+  combinationKey: string (UNIQUE)
+  createdAt: timestamp
+  updatedAt: timestamp
+}
+```
+
+## Edge Cases Handled
+
+### Backend
+
+- ✅ Duplicate variant combinations → 409 Conflict error
+- ✅ Out-of-stock variants → Stock validation
+- ✅ Invalid inputs → 400 Bad request with validation errors
+- ✅ Missing JWT → 401 Unauthorized
+- ✅ Invalid JWT → 401 Unauthorized
+- ✅ Non-existent resources → 404 Not Found
+
+## Testing
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## Default Test Credentials
+
+Email: `admin@mo-marketplace.com`
+Password: `password123`
+
+## Project Structure
+
+```
+src/
+├── auth/                  # Authentication module
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── auth.module.ts
+│   ├── strategies/
+│   │   └── jwt.strategy.ts
+│   ├── guards/
+│   │   └── jwt-auth.guard.ts
+│   └── dto/
+│       ├── login.dto.ts
+│       └── user.dto.ts
+├── products/              # Products module
+│   ├── products.controller.ts
+│   ├── products.service.ts
+│   ├── products.module.ts
+│   └── dto/
+│       ├── create-product.dto.ts
+│       ├── update-product.dto.ts
+│       ├── product-response.dto.ts
+│       └── quick-buy.dto.ts
+├── variants/              # Variants module
+│   ├── variants.controller.ts
+│   ├── variants.service.ts
+│   ├── variants.module.ts
+│   └── dto/
+│       ├── create-variant.dto.ts
+│       ├── update-variant.dto.ts
+│       └── variant-response.dto.ts
+├── entities/              # TypeORM entities
+│   ├── product.entity.ts
+│   └── variant.entity.ts
+├── common/                # Shared utilities
+│   ├── filters/
+│   ├── interceptors/
+│   ├── utils/
+│   └── decorators/
+├── config/                # Configuration
+│   └── database.config.ts
+├── app.module.ts
+└── main.ts
+```
+
+## Key Implementation Details
+
+### Combination Key Generation
+
+- Format: `${color}-${size}-${material}` (all lowercase)
+- Example: `"Red-M-Cotton"` → `"red-m-cotton"`
+- Unique constraint enforced at database level
+- Automatic duplicate detection returns 409 Conflict
+
+### JWT Strategy
+
+- Token expiration: 1 day (configurable)
+- Bearer token authentication
+- Passport JWT strategy
+- Mock user database for demo purposes
+
+### Validation
+
+- DTO validation on all endpoints
+- class-validator decorators
+- Whitelist enabled (forbids non-whitelisted properties)
+- Automatic transformation
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED
