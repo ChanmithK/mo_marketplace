@@ -5,10 +5,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./store/AuthContext";
+import { Navbar } from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
-import "./App.css";
 import ProductListPage from "./pages/ProductListPage";
 import ProductCreatePage from "./pages/ProductCreatePage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import "./App.css";
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -33,9 +35,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 
 // Main App Content
 const AppContent: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
+        {isAuthenticated && <Navbar />}
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -51,6 +56,14 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <ProductCreatePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <ProtectedRoute>
+                <ProductDetailPage />
               </ProtectedRoute>
             }
           />
